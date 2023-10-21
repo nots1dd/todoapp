@@ -8,7 +8,11 @@ class TodoCard extends StatefulWidget {
   final FirebaseFirestore firestore;
   final String uid;
 
-  const TodoCard({Key key, this.todo, this.firestore, this.uid})
+  const TodoCard(
+      {required Key key,
+      required this.todo,
+      required this.firestore,
+      required this.uid})
       : super(key: key);
 
   @override

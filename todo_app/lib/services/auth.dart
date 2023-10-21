@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 class Auth {
   final FirebaseAuth auth;
 
-  Auth({this.auth});
+  Auth({required this.auth});
 
-  Stream<User> get user => auth.authStateChanges();
+  Stream<User?> get user => auth.authStateChanges();
 
-  Future<String> createAccount({String email, String password}) async {
+  Future<String?> createAccount(
+      {required String email, required String password}) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email.trim(),
@@ -21,7 +22,8 @@ class Auth {
     }
   }
 
-  Future<String> signIn({String email, String password}) async {
+  Future<String?> signIn(
+      {required String email, required String password}) async {
     try {
       await auth.signInWithEmailAndPassword(
         email: email.trim(),
@@ -35,7 +37,7 @@ class Auth {
     }
   }
 
-  Future<String> signOut() async {
+  Future<String?> signOut() async {
     try {
       await auth.signOut();
       return "Success";

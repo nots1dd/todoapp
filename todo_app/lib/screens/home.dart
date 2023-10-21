@@ -10,7 +10,8 @@ class Home extends StatefulWidget {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
-  const Home({Key key, this.auth, this.firestore}) : super(key: key);
+  const Home({required Key key, required this.auth, required this.firestore})
+      : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Auth(auth: widget.auth).signOut();
             },
-          )
+          ),
         ],
       ),
       body: Column(
@@ -66,13 +67,14 @@ class _HomeState extends State<Home> {
                       if (_todoController.text != "") {
                         setState(() {
                           Database(firestore: widget.firestore).addTodo(
-                              uid: widget.auth.currentUser.uid,
-                              content: _todoController.text);
+                            uid: widget.auth.currentUser!.uid,
+                            content: _todoController.text,
+                          );
                           _todoController.clear();
                         });
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -90,22 +92,22 @@ class _HomeState extends State<Home> {
           Expanded(
             child: StreamBuilder(
               stream: Database(firestore: widget.firestore)
-                  .streamTodos(uid: widget.auth.currentUser.uid),
+                  .streamTodos(uid: widget.auth.currentUser!.uid),
               builder: (BuildContext context,
                   AsyncSnapshot<List<TodoModel>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
-                  if (snapshot.data.isEmpty) {
+                  if (snapshot.data!.isEmpty) {
                     return const Center(
                       child: Text("You don't have any unfinished Todos"),
                     );
                   }
                   return ListView.builder(
-                    itemCount: snapshot.data.length,
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) {
                       return TodoCard(
                         firestore: widget.firestore,
-                        uid: widget.auth.currentUser.uid,
-                        todo: snapshot.data[index],
+                        uid: widget.auth.currentUser!.uid,
+                        todo: snapshot.data![index],
                       );
                     },
                   );

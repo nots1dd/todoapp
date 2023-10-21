@@ -56,7 +56,7 @@ class _RootState extends State<Root> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder?(
       stream: Auth(auth: _auth).user,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {

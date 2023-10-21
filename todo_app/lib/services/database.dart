@@ -4,9 +4,9 @@ import 'package:todo_app/models/todo.dart';
 class Database {
   final FirebaseFirestore firestore;
 
-  Database({this.firestore});
+  Database({required this.firestore});
 
-  Stream<List<TodoModel>> streamTodos({String uid}) {
+  Stream<List<TodoModel?>> streamTodos({required String uid}) {
     try {
       return firestore
           .collection("todos")
@@ -26,7 +26,7 @@ class Database {
     }
   }
 
-  Future<void> addTodo({String uid, String content}) async {
+  Future<void> addTodo({required String uid, required String content}) async {
     try {
       firestore.collection("todos").doc(uid).collection("todos").add({
         "content": content,
@@ -37,7 +37,7 @@ class Database {
     }
   }
 
-  Future<void> updateTodo({String uid, String todoId}) async {
+  Future<void> updateTodo({required String uid, required String todoId}) async {
     try {
       firestore
           .collection("todos")

@@ -6,14 +6,14 @@ class TodoModel {
   bool done;
 
   TodoModel({
-    this.todoId,
-    this.content,
-    this.done,
+    required this.todoId,
+    required this.content,
+    required this.done,
   });
 
-  TodoModel.fromDocumentSnapshot({DocumentSnapshot documentSnapshot}) {
+  TodoModel.fromDocumentSnapshot({required DocumentSnapshot documentSnapshot}) {
     todoId = documentSnapshot.id;
-    content = documentSnapshot.data()['content'] as String;
-    done = documentSnapshot.data()['done'] as bool;
+    content = documentSnapshot.data()! as String;
+    done = documentSnapshot.data()! as bool;
   }
 }
