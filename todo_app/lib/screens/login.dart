@@ -59,10 +59,8 @@ class _LoginState extends State<Login> {
                         _emailController.clear();
                         _passwordController.clear();
                       } else {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(retVal!),
-                          ),
+                        SnackBar(
+                          content: Text(retVal!),
                         );
                       }
                     },
@@ -80,10 +78,8 @@ class _LoginState extends State<Login> {
                         _emailController.clear();
                         _passwordController.clear();
                       } else {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(retVal!),
-                          ),
+                        SnackBar(
+                          content: Text(retVal!),
                         );
                       }
                     },

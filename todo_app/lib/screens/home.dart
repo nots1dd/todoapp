@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -93,8 +95,10 @@ class _HomeState extends State<Home> {
             child: StreamBuilder(
               stream: Database(firestore: widget.firestore)
                   .streamTodos(uid: widget.auth.currentUser!.uid),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<TodoModel>> snapshot) {
+              builder: (
+                BuildContext context,
+                AsyncSnapshot<List<TodoModel?>> snapshot,
+              ) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.data!.isEmpty) {
                     return const Center(
@@ -104,11 +108,12 @@ class _HomeState extends State<Home> {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) {
-                      return TodoCard(
-                        firestore: widget.firestore,
-                        uid: widget.auth.currentUser!.uid,
-                        todo: snapshot.data![index],
-                      );
+                      return null;
+                      // return TodoCard?(
+                      //   firestore: widget.firestore,
+                      //   uid: widget.auth.currentUser!.uid,
+                      //   todo: snapshot.data![index],
+                      // );
                     },
                   );
                 } else {
@@ -124,3 +129,16 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+class TodoModel {
+  String? get content => null;
+
+  get done => null;
+
+  get todoId => null;
+
+  static TodoModel? fromDocumentSnapshot(
+      {required DocumentSnapshot<Object?> documentSnapshot}) {}
+}
+
+// ignore: avoid_classes_with_only_static_members
