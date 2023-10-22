@@ -10,10 +10,9 @@ class Login extends StatefulWidget {
   final FirebaseFirestore firestore;
 
   const Login({
-    required Key key,
     required this.auth,
     required this.firestore,
-  }) : super(key: key);
+  });
   @override
   _LoginState createState() => _LoginState();
 }

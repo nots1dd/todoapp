@@ -56,29 +56,46 @@ class _RootState extends State<Root> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder?(
-      stream: Auth(auth: _auth).user,
-      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          if (snapshot.data?.uid == null) {
-            return Login(
-              auth: _auth,
-              firestore: _firestore,
-            );
+    return MaterialApp(
+      home: StreamBuilder(
+        stream: _auth
+            .authStateChanges(), // Listen to the user's authentication state
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            final User? user = snapshot.data;
+
+            if (user == null) {
+              // User is not authenticated, show a login screen
+              return Login(
+                auth: _auth,
+                firestore: _firestore,
+              );
+            } else {
+              // User is authenticated, show the main app screen
+              // ignore: avoid_dynamic_calls
+              return Home(auth: _auth, firestore: _firestore);
+            }
           } else {
-            return Home(
-              auth: _auth,
-              firestore: _firestore,
-            );
+            // Loading state
+            return CircularProgressIndicator();
           }
-        } else {
-          return const Scaffold(
-            body: Center(
-              child: Text("Loading..."),
-            ),
-          );
-        }
-      }, //Auth stream
+        },
+      ),
     );
   }
 }
+
+
+
+  // Implement your login UI and authentication logic here
+
+
+
+  // Implement your main app UI and Firestore operations here
+
+
+
+
+
+
+
